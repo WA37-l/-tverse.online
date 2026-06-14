@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI神器导航 - 全球150+精选工具</title>
+    <meta name="keywords" content="AI工具,人工智能导航,AI绘画,AI写作,AI视频生成,效率工具,在线工具大全">
+    <meta name="description" content="Tverse.ai 精选全球150+优质AI工具与应用，涵盖AI绘画、文案写作、视频生成、编程开发等领域，助力个人与企业提效创新。">
+    <meta name="robots" content="index, follow">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,24 +17,72 @@
             --text-main: #e6edf3; --text-sub: #8b949e; --border: #30363d;
             --accent: #58a6ff; --accent-hover: #79c0ff;
             --ad-bg: rgba(88, 166, 255, 0.05); --ad-border: rgba(88, 166, 255, 0.2);
+            --sidebar-width: 380px;
         }
         body.theme-light { --bg-primary: #f6f8fa; --bg-secondary: #ffffff; --card-bg: #ffffff; --text-main: #1f2328; --text-sub: #656d76; --border: #d0d7de; --accent: #0969da; --ad-bg: rgba(9, 105, 218, 0.05); --ad-border: rgba(9, 105, 218, 0.2); }
         body.theme-pro { --bg-primary: #0a1929; --bg-secondary: #132f4c; --card-bg: #1a365d; --text-main: #e2e8f0; --text-sub: #a0aec0; --border: #2d3748; --accent: #4299e1; --ad-bg: rgba(66, 153, 225, 0.05); --ad-border: rgba(66, 153, 225, 0.2); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; position: relative; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; }
         .bg-soft { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 166, 255, 0.08), transparent), var(--bg-primary); }
-        .sidebar { width: 260px; height: 100vh; position: fixed; left: 0; top: 0; background: var(--bg-secondary); border-right: 1px solid var(--border); padding: 24px 16px; overflow-y: auto; z-index: 50; }
-        .main-content { margin-left: 260px; padding: 32px; }
-        .category-item { display: flex; align-items: center; padding: 12px 16px; margin: 4px 0; border-radius: 8px; cursor: pointer; color: var(--text-sub); font-weight: 500; font-size: 14px; }
-        .category-item:hover { background: var(--ad-bg); color: var(--text-main); }
-        .category-item.active { background: var(--accent); color: white; font-weight: 600; }
-        .tool-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; height: 100%; display: flex; flex-direction: column; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        
+        .app-container { display: flex; max-width: 1440px; margin: 0 auto; padding: 20px; gap: 20px; }
+        
+        /* 左侧主内容区 */
+        .main-content { flex: 1; min-width: 0; }
+        
+        header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 16px 24px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
+        .logo { font-size: 22px; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+        .search-bar { display: flex; align-items: center; background: var(--bg-primary); border-radius: 8px; padding: 8px 12px; width: 280px; border: 1px solid var(--border); }
+        .search-bar input { border: none; outline: none; background: transparent; padding: 4px 8px; color: var(--text-main); width: 100%; }
+        .search-bar button { background: var(--accent); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+        
+        /* 分类筛选 */
+        .category-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn { padding: 8px 16px; border: 1px solid var(--border); background: var(--card-bg); border-radius: 20px; cursor: pointer; font-size: 14px; transition: all 0.2s; color: var(--text-sub); }
+        .tab-btn:hover, .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        /* 工具网格 */
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .tool-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: all 0.3s ease; display: flex; flex-direction: column; }
         .tool-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
-        .tool-card::after { content: attr(data-desc); position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, var(--card-bg) 60%, transparent); padding: 20px; color: var(--text-sub); font-size: 13px; line-height: 1.5; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none; }
-        .tool-card:hover::after { opacity: 1; transform: translateY(0); }
         .tool-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); border: 1px solid var(--border); font-size: 20px; color: var(--accent); }
-        .ad-container { background: var(--ad-bg); border: 1px dashed var(--ad-border); border-radius: 12px; padding: 24px; margin: 24px 0; text-align: center; position: relative; }
-        .ad-label { position: absolute; top: 12px; right: 12px; background: var(--accent); color: white; font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 600; }
+        .tool-name { font-size: 16px; font-weight: 600; margin-top: 12px; }
+        .tool-desc { font-size: 13px; color: var(--text-sub); margin-top: 8px; flex-grow: 1; }
+        .tool-link { margin-top: 16px; padding: 8px 12px; background: var(--ad-bg); color: var(--accent); border-radius: 6px; text-align: center; font-size: 14px; font-weight: 500; border: 1px solid var(--ad-border); }
+        .tool-link:hover { background: var(--accent); color: white; }
+        
+        /* 右侧侧边栏 */
+        .sidebar-right { width: var(--sidebar-width); flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .sidebar-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: var(--accent); }
+        
+        /* 热点新闻 */
+        .hot-list { display: flex; flex-direction: column; gap: 12px; }
+        .hot-item { display: flex; align-items: baseline; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .hot-rank { font-weight: bold; font-size: 14px; min-width: 20px; text-align: center; }
+        .hot-rank.top1 { color: #ff4d4f; }
+        .hot-rank.top2 { color: #faad14; }
+        .hot-rank.top3 { color: #52c41a; }
+        .hot-title { font-size: 14px; color: var(--text-main); text-decoration: none; flex: 1; line-height: 1.4; }
+        .hot-title:hover { color: var(--accent); text-decoration: underline; }
+        
+        /* 推荐工具 */
+        .rec-grid { display: flex; flex-direction: column; gap: 12px; }
+        .rec-card { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; transition: all 0.2s; border: 1px solid transparent; }
+        .rec-card:hover { border-color: var(--accent); background: var(--ad-bg); }
+        .rec-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); font-size: 16px; color: var(--accent); }
+        .rec-name { font-size: 14px; font-weight: 600; }
+        .rec-desc { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+        .rec-link { margin-left: auto; font-size: 12px; color: var(--accent); font-weight: 600; }
+        
+        /* SEO文章 */
+        .article-list { display: flex; flex-direction: column; gap: 12px; max-height: 500px; overflow-y: auto; padding-right: 5px; }
+        .article-item { padding: 12px; border-radius: 8px; border: 1px solid var(--border); transition: all 0.2s; cursor: pointer; }
+        .article-item:hover { border-color: var(--accent); background: var(--ad-bg); }
+        .article-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+        .article-meta { font-size: 12px; color: var(--text-sub); display: flex; justify-content: space-between; }
+        
+        /* 悬浮组件 */
         .mini-player { position: fixed; bottom: 24px; right: 24px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 100; display: flex; align-items: center; gap: 12px; max-width: 280px; }
         .player-ad { position: fixed; bottom: 100px; right: 24px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 99; width: 280px; text-align: center; }
         .mini-player-controls { display: flex; align-items: center; gap: 8px; }
@@ -39,90 +91,77 @@
         .theme-switcher { position: fixed; bottom: 24px; left: 24px; display: flex; flex-direction: column; gap: 12px; z-index: 99; }
         .theme-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--border); color: var(--text-sub); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
         .theme-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        /* 模态框 */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 40px; max-width: 480px; width: 100%; text-align: center; position: relative; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .qr-container { background: white; padding: 16px; border-radius: 12px; display: inline-block; margin: 24px 0; }
-        .article-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; transition: all 0.3s; cursor: pointer; }
-        .article-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-
-        /* ===== 新增：AI每日热点 & 工具每日推荐 ===== */
-        .hot-section { margin-bottom: 32px; }
-        .hot-section h3 { font-size: 17px; font-weight: 700; margin-bottom: 14px; display:flex; align-items:center; gap:8px; color:var(--accent); }
-        .hot-list { display:flex; flex-direction:column; gap:10px; }
-        .hot-item {
-          background:var(--card-bg); border:1px solid var(--border); border-radius:10px;
-          padding:12px 16px; display:flex; align-items:baseline; gap:10px;
-          transition: border-color .2s;
+        
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .app-container { flex-direction: column; }
+            .sidebar-right { width: 100%; }
+            .mini-player, .player-ad { display: none; } /* 移动端隐藏悬浮组件 */
         }
-        .hot-item:hover { border-color:var(--accent); }
-        .hot-num { font-size:12px; font-weight:700; color:var(--accent); min-width:18px; text-align:right; flex-shrink:0; }
-        .hot-item a { color:var(--text-main); text-decoration:none; font-size:14px; font-weight:500; line-height:1.5; }
-        .hot-item a:hover { color:var(--accent); text-decoration:underline; }
-        .hot-meta { font-size:12px; color:var(--text-sub); margin-left:auto; flex-shrink:0; white-space:nowrap; }
-        .hot-loading { color:var(--text-sub); font-size:13px; padding:8px 0; }
-        .hot-error { color:#f85149; font-size:13px; padding:8px 0; }
-
-        .rec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; margin-bottom:32px; }
-        .rec-card {
-          background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:16px;
-          display:flex; align-items:center; gap:14px; transition: all .25s;
-        }
-        .rec-card:hover { border-color:var(--accent); transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.18); }
-        .rec-icon { width:42px;height:42px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;background:var(--bg-primary);border:1px solid var(--border);font-size:18px;color:var(--accent);flex-shrink:0; }
-        .rec-card-body h4 { font-size:14px; font-weight:700; }
-        .rec-card-body p { font-size:12px; color:var(--text-sub); margin-top:2px; }
-        .rec-card-body a { font-size:12px; color:var(--accent); text-decoration:none; font-weight:600; }
-        .rec-card-body a:hover { text-decoration:underline; }
-
-        @media (max-width: 768px) { .sidebar { transform: translateX(-100%); } .sidebar.show { transform: translateX(0); } .main-content { margin-left: 0; padding: 20px; } .mini-player { bottom: 80px; right: 16px; left: 16px; max-width: none; } .player-ad { bottom: 160px; right: 16px; left: 16px; width: auto; } .theme-switcher { bottom: 80px; left: 16px; } }
     </style>
 </head>
 <body>
     <div class="bg-soft"></div>
-    <aside class="sidebar" id="sidebar">
-        <div class="mb-8"><h1 class="text-2xl font-bold" style="color: var(--accent);">🤖 AI神器导航</h1><p class="text-sm mt-1" style="color: var(--text-sub);">150+ 精选工具</p></div>
-        <nav id="categoryList"></nav>
-    </aside>
-
-    <main class="main-content">
-        <div class="flex justify-between items-center mb-8 flex-wrap gap-4">
-            <div><h1 class="text-3xl font-bold mb-2">探索 AI 工具宇宙</h1><p style="color: var(--text-sub);">汇聚全球最前沿的人工智能工具</p></div>
-            <div class="flex gap-3">
-                <button onclick="toggleSidebar()" class="md:hidden px-4 py-2 rounded-lg" style="background: var(--accent); color: white;"><i class="fas fa-bars"></i></button>
+    
+    <div class="app-container">
+        <!-- 左侧主内容区 -->
+        <div class="main-content">
+            <header>
+                <div class="logo"><i class="fas fa-robot"></i> AI神器导航</div>
+                <div class="search-bar">
+                    <input type="text" placeholder="搜索工具...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
                 <button onclick="openAboutModal()" class="px-6 py-3 rounded-xl font-bold" style="background: var(--accent); color: white;">💰 商务合作</button>
+            </header>
+            
+            <div class="category-tabs" id="categoryTabs">
+                <!-- 分类由JS生成 -->
+            </div>
+            
+            <div class="tools-grid" id="toolsGrid">
+                <!-- 工具由JS生成 -->
             </div>
         </div>
-
-        <div class="ad-container relative"><div class="ad-label">广告</div><div style="color: var(--text-sub);"><i class="fas fa-bullhorn mb-2"></i><div>此处可放置横幅广告 (1200×90)</div></div></div>
         
-        <div id="toolsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:rid-cols-3 xl:grid-cols-4 gap-5"></div>
-
-        <section id="seoSection" class="mt-16">
-            <!-- ===== AI每日热点（实时） ===== -->
-            <div class="hot-section" id="hotBlock">
-                <h3><i class="fas fa-bolt"></i> AI 每日热点（实时）</h3>
+        <!-- 右侧侧边栏 -->
+        <div class="sidebar-right">
+            <!-- AI每日热点 -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title"><i class="fas fa-bolt"></i> AI 每日热点</h3>
                 <div class="hot-list" id="hotList">
-                    <div class="hot-loading"><i class="fas fa-spinner fa-spin"></i> 正在拉取最新热点…</div>
+                    <!-- 热点由JS生成 -->
                 </div>
             </div>
-
-            <!-- ===== 工具每日推荐（按天轮换） ===== -->
-            <div class="hot-section" id="recBlock">
-                <h3><i class="fas fa-star"></i> 今日工具推荐</h3>
-                <div class="rec-grid" id="recGrid"></div>
+            
+            <!-- 今日工具推荐 -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title"><i class="fas fa-star"></i> 今日工具推荐</h3>
+                <div class="rec-grid" id="recGrid">
+                    <!-- 推荐由JS生成 -->
+                </div>
             </div>
-
-            <!-- 原文章列表 -->
-            <h2 class="text-2xl font-bold mb-6 flex items-center" style="color: var(--accent);">
-                <i class="fas fa-newspaper mr-3"></i>AI行业智库 (300篇)
-            </h2>
-            <div id="articleList"></div>
-        </section>
-    </main>
-
+            
+            <!-- SEO文章 -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title"><i class="fas fa-newspaper"></i> AI行业智库 (300篇)</h3>
+                <div class="article-list" id="articleList">
+                    <!-- 文章由JS生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 悬浮广告 -->
     <div class="player-ad"><div class="ad-label">推广</div><div style="color: var(--text-sub); font-size: 14px;"><i class="fas fa-rocket mb-2"></i><div>悬浮广告位</div><small>用户停留时间长 | 转化率高</small></div></div></div>
-
+    
+    <!-- 音乐播放器 -->
     <div class="mini-player">
         <div class="flex-1 min-w-0"><div class="font-semibold text-sm truncate" id="currentSongTitle">选择歌曲</div><div class="text-xs" style="color: var(--text-sub);" id="currentArtist">本地音源</div></div>
         <div class="mini-player-controls">
@@ -132,13 +171,15 @@
         </div>
         <audio id="audioPlayer"></audio>
     </div>
-
+    
+    <!-- 主题切换 -->
     <div class="theme-switcher">
         <div class="theme-btn" onclick="setTheme('dark')" title="暗黑模式"><i class="fas fa-moon"></i></div>
         <div class="theme-btn" onclick="setTheme('light')" title="白亮模式"><i class="fas fa-sun"></i></div>
         <div class="theme-btn" onclick="setTheme('pro')" title="专业模式"><i class="fas fa-briefcase"></i></div>
     </div>
-
+    
+    <!-- 商务合作模态框 -->
     <div id="aboutModal" class="modal">
         <div class="modal-content">
             <button onclick="closeAboutModal()" class="absolute top-4 right-4 text-2xl" style="color: var(--text-sub);">&times;</button>
@@ -156,11 +197,48 @@
             <button onclick="closeAboutModal()" class="mt-8 w-full py-3 rounded-xl font-bold" style="background: var(--accent); color: white;">立即咨询</button>
         </div>
     </div>
+    
+    <!-- 关于我们模态框 -->
+    <div id="aboutUsModal" class="modal">
+        <div class="modal-content" style="max-width: 700px; text-align: left;">
+            <button onclick="closeAboutUsModal()" class="absolute top-4 right-4 text-2xl" style="color: var(--text-sub);">&times;</button>
+            <h2 class="text-2xl font-bold mb-4" style="color: var(--accent);">关于 AI神器导航</h2>
+            <div class="space-y-4" style="color: var(--text-sub); font-size: 14px; line-height: 1.8;">
+                <p>tverse.online 是一个 AI 工具导航与资讯站点，帮助开发者、创作者和普通用户快速发现、试用和评估全球最前沿的 AI 工具。</p>
+                <p>我们坚持中立筛选，不收取排名费用，致力于提升信息获取效率。</p>
+                <p><strong style="color: var(--text-main);">商务合作：</strong> <a href="mailto:kvgzhx323@163.com" style="color: var(--accent);">kvgzhx323@163.com</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 隐私政策模态框 -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content" style="max-width: 700px; text-align: left; max-height: 80vh; overflow-y: auto;">
+            <button onclick="closePrivacyModal()" class="absolute top-4 right-4 text-2xl" style="color: var(--text-sub);">&times;</button>
+            <h2 class="text-2xl font-bold mb-4" style="color: var(--accent);">隐私政策</h2>
+            <div class="space-y-4" style="color: var(--text-sub); font-size: 14px; line-height: 1.8;">
+                <h3 style="color: var(--text-main); font-size: 16px;">1. 信息收集</h3>
+                <p>本站为工具导航与资讯展示站点，原则上不主动收集姓名、电话等个人身份信息。页面交互数据（如点击跳转、播放器操作）由浏览器本地处理。</p>
+                <h3 style="color: var(--text-main); font-size: 16px;">2. Cookie 与第三方广告</h3>
+                <p>若启用第三方广告服务（如 Google AdSense），相关服务商可能通过 Cookie 投放广告并记录匿名信息，具体以第三方隐私政策为准。</p>
+                <h3 style="color: var(--text-main); font-size: 16px;">3. 外部链接</h3>
+                <p>本站包含大量外部工具链接，跳转后由目标站点负责其隐私条款。</p>
+                <h3 style="color: var(--text-main); font-size: 16px;">4. 联系</h3>
+                <p>如有疑问请联系：<a href="mailto:kvgzhx323@163.com" style="color: var(--accent);">kvgzhx323@163.com</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <div style="text-align:center;padding:24px 0;font-size:12px;color:#8b949e">
+      <a href="javascript:void(0);" onclick="openAboutUsModal()" style="color:#8b949e;text-decoration:none">关于</a>
+      &nbsp;·&nbsp;
+      <a href="javascript:void(0);" onclick="openPrivacyModal()" style="color:#8b949e;text-decoration:none">隐私政策</a>
+    </div>
 
     <script>
         // ====================== 分类数据 ======================
         const categories = [
-            { id: 'news', name: 'AI资讯', icon: 'fa-newspaper' },
             { id: 'all', name: '全部工具', icon: 'fa-star' },
             { id: 'writing', name: 'AI写作', icon: 'fa-pen' },
             { id: 'ppt', name: 'AI PPT', icon: 'fa-file-powerpoint' },
@@ -177,7 +255,7 @@
             { id: 'legal', name: 'AI法律', icon: 'fa-scale-balanced' }
         ];
 
-        // ====================== 150个工具数据（完整） ======================
+        // ====================== 150个工具数据 ======================
         const tools = [
             // AI写作 (10个)
             { name: "ChatGPT", desc: "OpenAI推出的对话式AI模型，能够回答问题、撰写文章、调试代码。", url: "https://chat.openai.com", category: "writing", icon: "fa-robot" },
@@ -336,55 +414,65 @@
             { name: "Nolo", desc: "法律自助服务。", url: "https://www.nolo.com", category: "legal", icon: "fa-book" }
         ];
 
-        // ====================== 300篇SEO文章（完整） ======================
+        // ====================== 300篇SEO文章 ======================
         const seoArticles = [];
         const baseTitles = [
-            "2026年AI工具排行榜：改变未来的10大神器",
-            "ChatGPT完全指南：从入门到精通",
-            "Midjourney提示词工程：生成大师级画作",
-            "AI写作工具横评：哪款最适合自媒体？",
-            "如何用AI工具在一天内完成一周的工作",
-            "AI视频生成工具Runway入门教程",
-            "Stable Diffusion本地部署保姆级教程",
-            "AI编程助手Copilot使用技巧",
-            "AI设计工具Figma进阶指南",
-            "AI配音工具ElevenLabs详细评测"
+            "2026年AI工具排行榜：改变未来的10大神器", "ChatGPT完全指南：从入门到精通", "Midjourney提示词工程：生成大师级画作",
+            "AI写作工具横评：哪款最适合自媒体？", "如何用AI工具在一天内完成一周的工作", "AI视频生成工具Runway入门教程",
+            "Stable Diffusion本地部署保姆级教程", "AI编程助手Copilot使用技巧", "AI设计工具Figma进阶指南", "AI配音工具ElevenLabs详细评测",
+            "AI绘画变现：如何从0到1赚到第一桶金", "AI副业指南：普通人如何利用AI月入过万", "AI数字人直播：24小时自动带货实战",
+            "AI法律助手：合同审查与风险评估", "AI医疗诊断：辅助医生的新利器", "AI教育革命：个性化学习的未来",
+            "AI金融风控：智能投顾与量化交易", "AI游戏开发：自动生成关卡与剧情", "AI音乐创作：从旋律到歌词的全流程",
+            "AI翻译工具横评：打破语言壁垒", "AI简历优化：轻松通过HR筛选", "AI面试助手：实时答疑与反馈",
+            "AI科研助手：文献综述与数据分析", "AI电商运营：自动生成详情页与客服", "AI短视频创作：一键生成爆款脚本",
+            "AI模型微调：训练专属私有模型", "AI伦理与安全：如何防范风险？", "AI算力租赁：低成本跑大模型的秘诀",
+            "AI开源项目推荐：值得关注的GitHub宝藏", "AI行业报告：2026年趋势预测"
         ];
 
+        const contentSnippets = {
+            intro: ["随着人工智能技术的飞速发展...", "在数字化转型的浪潮下...", "对于现代职场人和创作者而言..."],
+            tech: ["核心技术基于Transformer架构...", "采用了最新的Diffusion模型...", "基于MoE混合专家架构..."],
+            caseStudy: ["在医疗领域，该工具已被用于...", "某知名电商利用该技术...", "一家初创公司利用此工具..."],
+            future: ["未来三年，我们将看到多模态融合...", "AGI的探索将加速...", "随着监管政策的完善..."],
+            tips: ["<strong>避坑指南：</strong>新手常犯的错误...", "<strong>变现建议：</strong>不要只停留在工具使用层面...", "<strong>学习路径：</strong>建议先精通一款工具..."]
+        };
+
         for (let i = 1; i <= 300; i++) {
-            const bt = baseTitles[i % baseTitles.length];
-            seoArticles.push({
-                id: i,
-                title: `${bt} - 第${i}篇`,
-                date: `2026-01-${String((i % 28) + 1).padStart(2, '0')}`,
-                views: `${Math.floor(Math.random() * 10) + 1}.${Math.floor(Math.random() * 9)}万`,
-                content: `本文是《${bt}》的深度解析。随着人工智能技术的飞速发展，我们正处在一个前所未有的变革时代。本报告将详细分析该技术在实际应用中的表现，包括其在不同行业中的落地案例、面临的挑战以及未来的发展趋势。
+            const titleIndex = (i - 1) % baseTitles.length;
+            const title = baseTitles[titleIndex];
+            const snippetIndex = i % Object.keys(contentSnippets).length;
+            const keys = Object.keys(contentSnippets);
+            
+            let content = "";
+            content += `<p>${contentSnippets.intro[snippetIndex % contentSnippets.intro.length]}</p>`;
+            content += `<h3>技术原理深度剖析</h3><p>${contentSnippets.tech[snippetIndex % contentSnippets.tech.length]}</p>`;
+            content += `<h3>行业应用案例分析</h3><p>${contentSnippets.caseStudy[snippetIndex % contentSnippets.caseStudy.length]}</p>`;
+            content += `<h3>未来发展趋势预测</h3><p>${contentSnippets.future[snippetIndex % contentSnippets.future.length]}</p>`;
+            content += `<blockquote>${contentSnippets.tips[snippetIndex % contentSnippets.tips.length]}</blockquote>`;
+            content += `<h3>实操建议</h3><p>建议您从最简单的场景入手，例如使用 <code>${title.split(' ')[0]}</code> 来处理日常工作中的重复性任务。</p>`;
 
-### 核心观点
-
-1. **技术突破**：详细阐述了最新的算法优化和算力提升。
-2. **应用场景**：列举了医疗、教育、金融等多个领域的实际应用。
-3. **未来展望**：预测了未来三年的发展方向和潜在风险。
-
-通过本文的阅读，您将获得对该领域的系统性认知，并能够在实际工作中加以应用。无论您是投资者、从业者还是普通用户，这篇文章都将帮助您更好地理解AI技术如何重塑我们的未来。
-
-### 详细分析
-
-人工智能正在以前所未有的速度改变世界。从ChatGPT的横空出世到Midjourney的惊艳画作，AI工具已经从实验室走向了千家万户。本报告将深入分析这些工具背后的技术原理，探讨它们如何提高工作效率，以及如何应对可能带来的伦理和社会问题。
-
-我们相信，未来十年将是AI技术爆发的黄金十年。提前了解并掌握这些工具，将成为您在职场和生活中保持竞争力的关键。`
-            });
+            seoArticles.push({ id: i, title: `${title} - 第${i}篇`, date: `2026-01-${String((i % 28) + 1).padStart(2, '0')}`, views: `${Math.floor(Math.random() * 10) + 1}.${Math.floor(Math.random() * 9)}万`, content: content });
         }
 
         // ====================== 音乐数据 ======================
-        const songs = [
-            { title: "changes", artist: "Local Artist" },
-            { title: "lursic", artist: "Local Artist" },
-            { title: "mystery-of-love", artist: "Local Artist" }
+        const songs = [{ title: "changes", artist: "Local Artist" }, { title: "lursic", artist: "Local Artist" }, { title: "mystery-of-love", artist: "Local Artist" }];
+
+        // ====================== 手动热点数据 ======================
+        const manualHotNews = [
+            { title: "OpenAI发布全新多模态模型 GPT-5", url: "https://openai.com/blog/new-model", rank: 1 },
+            { title: "AI视频生成工具Runway推出Gen-3 Alpha", url: "https://runwayml.com/blog/gen-3", rank: 2 },
+            { title: "谷歌I/O大会发布Gemini 1.5 Pro", url: "https://blog.google/technology/ai/google-io-2024/", rank: 3 },
+            { title: "苹果WWDC宣布将AI融入全系操作系统", url: "https://www.apple.com/newsroom/", rank: 4 },
+            { title: "国内大模型价格战爆发，多家厂商宣布降价", url: "https://www.36kr.com/newsflashes", rank: 5 },
+            { title: "Meta开源Llama 4模型，参数突破万亿级别", url: "https://ai.meta.com/research/", rank: 6 },
+            { title: "微软Copilot全面集成Windows 12系统", url: "https://www.microsoft.com/copilot", rank: 7 },
+            { title: "AI芯片巨头NVIDIA发布新一代Blackwell架构", url: "https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/", rank: 8 },
+            { title: "AI安全新规出台：生成式AI服务管理办法", url: "https://www.gov.cn/zhengce/2024-02/29/content_6934432.htm", rank: 9 },
+            { title: "2026年全球AI市场规模预计突破万亿美元", url: "https://www.statista.com/topics/3104/artificial-intelligence-ai/", rank: 10 }
         ];
 
         // ====================== 应用逻辑 ======================
-        let currentCategory = 'news';
+        let currentCategory = 'all';
         let currentSongIndex = 0;
         let isPlaying = false;
         const audioPlayer = document.getElementById('audioPlayer');
@@ -393,20 +481,19 @@
             renderCategories();
             renderTools();
             renderSEO();
+            renderHotNews();
+            renderDailyRecs();
             setupMusicPlayer();
             setTheme('dark');
-            document.querySelector('.category-item[data-category="news"]').classList.add('active');
+            document.querySelector('.tab-btn[data-category="all"]').classList.add('active');
         }
 
         function renderCategories() {
-            const categoryList = document.getElementById('categoryList');
-            categoryList.innerHTML = categories.map(cat => `
-                <div class="category-item ${cat.id === currentCategory ? 'active' : ''}" 
-                     data-category="${cat.id}"
-                     onclick="filterTools('${cat.id}')">
-                    <i class="fas ${cat.icon} w-5 mr-3"></i>
-                    ${cat.name}
-                </div>
+            const tabs = document.getElementById('categoryTabs');
+            tabs.innerHTML = categories.map(cat => `
+                <button class="tab-btn" data-category="${cat.id}" onclick="filterTools('${cat.id}')">
+                    <i class="fas ${cat.icon} mr-2"></i> ${cat.name}
+                </button>
             `).join('');
         }
 
@@ -415,60 +502,61 @@
                 ? tools 
                 : tools.filter(tool => tool.category === currentCategory);
             
-            const container = document.getElementById('toolsContainer');
-            container.innerHTML = filteredTools.map((tool, index) => {
-                return `
-                <div class="tool-card" data-desc="${tool.desc}">
-                    <div class="flex items-center mb-4">
-                        <div class="tool-icon">
-                            <i class="fas ${tool.icon}"></i>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="font-bold text-lg">${tool.name}</h3>
-                            <p class="text-sm" style="color: var(--text-sub);">${tool.desc.substring(0, 50)}...</p>
-                        </div>
-                    </div>
-                    <a href="${tool.url}" target="_blank" 
-                       class="mt-auto inline-flex items-center justify-center px-4 py-2 rounded-lg transition"
-                       style="background: var(--ad-bg); color: var(--accent); border: 1px solid var(--ad-border);">
-                        立即访问 <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = filteredTools.map(tool => `
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas ${tool.icon}"></i></div>
+                    <div class="tool-name">${tool.name}</div>
+                    <div class="tool-desc">${tool.desc}</div>
+                    <a href="${tool.url}" target="_blank" class="tool-link">立即访问 <i class="fas fa-arrow-right"></i></a>
                 </div>
-                `;
-            }).join('');
+            `).join('');
         }
 
         function renderSEO() {
-            const articleList = document.getElementById('articleList');
-            articleList.innerHTML = seoArticles.map((article, index) => `
-                <div class="article-card" onclick="goToArticle(${article.id})">
-                    <h3 class="font-bold text-xl mb-3">${article.title}</h3>
-                    <p class="text-sm mb-4 leading-relaxed" style="color: var(--text-sub);">${article.content.substring(0, 150)}...</p>
-                    <div class="flex justify-between items-center text-sm" style="color: var(--text-sub);">
-                        <span>发布于 ${article.date} · ${article.views} 阅读</span>
-                        <span style="color: var(--accent);">阅读全文 →</span>
+            const list = document.getElementById('articleList');
+            list.innerHTML = seoArticles.map(article => `
+                <div class="article-item" onclick="goToArticle(${article.id})">
+                    <div class="article-title">${article.title}</div>
+                    <div class="article-meta">
+                        <span>发布于 ${article.date}</span>
+                        <span>${article.views} 阅读</span>
                     </div>
+                </div>
+            `).join('');
+        }
+
+        function renderHotNews() {
+            const list = document.getElementById('hotList');
+            list.innerHTML = manualHotNews.map(item => `
+                <a href="${item.url}" target="_blank" class="hot-item">
+                    <div class="hot-rank top${item.rank <= 3 ? item.rank : ''}">${item.rank}</div>
+                    <div class="hot-title">${item.title}</div>
+                </a>
+            `).join('');
+        }
+
+        function renderDailyRecs() {
+            const grid = document.getElementById('recGrid');
+            // 随机选3个工具
+            const shuffled = [...tools].sort(() => 0.5 - Math.random()).slice(0, 3);
+            grid.innerHTML = shuffled.map(t => `
+                <div class="rec-card">
+                    <div class="rec-icon"><i class="fas ${t.icon}"></i></div>
+                    <div>
+                        <div class="rec-name">${t.name}</div>
+                        <div class="rec-desc">${t.desc.substring(0, 30)}...</div>
+                    </div>
+                    <a href="${t.url}" target="_blank" class="rec-link">去访问</a>
                 </div>
             `).join('');
         }
 
         function filterTools(categoryId) {
             currentCategory = categoryId;
-            document.querySelectorAll('.category-item').forEach(item => {
-                item.classList.remove('active');
-                if (item.dataset.category === categoryId) item.classList.add('active');
-            });
-            
-            const seoSection = document.getElementById('seoSection');
-            if (categoryId === 'news') {
-                seoSection.classList.remove('hidden');
-                renderSEO();
-            } else {
-                seoSection.classList.add('hidden');
-                renderTools();
-            }
-            
-            if (window.innerWidth <= 768) toggleSidebar();
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.tab-btn[data-category="${categoryId}"]`).classList.add('active');
+            renderTools();
         }
 
         function setupMusicPlayer() {
@@ -505,88 +593,14 @@
             renderTools();
         }
 
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('show'); }
+        // 模态框逻辑
         function openAboutModal() { document.getElementById('aboutModal').style.display = 'flex'; }
         function closeAboutModal() { document.getElementById('aboutModal').style.display = 'none'; }
-
+        function openAboutUsModal() { document.getElementById('aboutUsModal').style.display = 'flex'; }
+        function closeAboutUsModal() { document.getElementById('aboutUsModal').style.display = 'none'; }
+        function openPrivacyModal() { document.getElementById('privacyModal').style.display = 'flex'; }
+        function closePrivacyModal() { document.getElementById('privacyModal').style.display = 'none'; }
         function goToArticle(id) { window.location.href = `article.html?id=${id}`; }
-
-        document.getElementById('aboutModal').addEventListener('click', e => {
-            if (e.target === document.getElementById('aboutModal')) closeAboutModal();
-        });
-
-        /* =============================================
-           AI 每日热点 - 实时（HN Algolia，免费，无Key）
-           ============================================= */
-        (function loadAINewsHot() {
-          const container = document.getElementById('hotList');
-          if (!container) return;
-
-          const q = encodeURIComponent('AI LLM GPT Claude Midjourney "large language model" stable diffusion');
-          const url = `https://hn.algolia.com/api/v1/search?query=${q}&tags=story&hitsPerPage=12&attributesToRetrieve=["title","url","points","created_at","objectID"]`;
-
-          fetch(url)
-            .then(r => r.json())
-            .then(data => {
-              const hits = (data && data.hits) || [];
-              if (!hits.length) { container.innerHTML = '<div class="hot-error">暂无热点数据，稍后再试</div>'; return; }
-
-              container.innerHTML = hits.map((h, i) => {
-                const title = (h.title || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-                const link  = h.url ? h.url : `https://news.ycombinator.com/item?id=${h.objectID}`;
-                const pts   = (h.points !== undefined && h.points !== null) ? `${h.points}▲` : '';
-                return `
-                  <div class="hot-item">
-                    <span class="hot-num">${i + 1}</span>
-                    <a href="${link}" target="_blank" rel="noopener noreferrer">${title}</a>
-                    <span class="hot-meta">${pts}</span>
-                  </div>`;
-              }).join('');
-            })
-            .catch(() => {
-              container.innerHTML = '<div class="hot-error">拉取热点失败（可能是网络限制），刷新页面试试</div>';
-            });
-        })();
-
-        /* =============================================
-           工具每日推荐 - 按“今天日期”做确定性轮换
-           ============================================= */
-        (function loadDailyRecs() {
-          const grid = document.getElementById('recGrid');
-          if (!grid) return;
-
-          const today = new Date();
-          const seedNum =
-            today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
-
-          function seededRandom(seed) {
-            let s = seed;
-            return function () {
-              s = (s * 16807 + 0) % 2147483647;
-              return (s - 1) / 2147483646;
-            };
-          }
-          const rng = seededRandom(seedNum);
-
-          const pool = tools.slice();
-          for (let i = pool.length - 1; i > 0; i--) {
-            const j = Math.floor(rng() * (i + 1));
-            [pool[i], pool[j]] = [pool[j], pool[i]];
-          }
-
-          const picks = pool.slice(0, 3);
-
-          grid.innerHTML = picks.map(t => `
-            <div class="rec-card">
-              <div class="rec-icon"><i class="fas ${t.icon}"></i></div>
-              <div class="rec-card-body">
-                <h4>${t.name}</h4>
-                <p>${t.desc.substring(0, 38)}…</p>
-                <a href="${t.url}" target="_blank">去访问 <i class="fas fa-arrow-right" style="font-size:10px;margin-left:3px;"></i></a>
-              </div>
-            </div>
-          `).join('');
-        })();
 
         document.addEventListener('DOMContentLoaded', init);
     </script>
