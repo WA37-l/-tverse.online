@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI神器导航 - 全球150+精选工具</title>
+    <meta name="keywords" content="AI工具,人工智能导航,AI绘画,AI写作,AI视频生成,效率工具,在线工具大全">
+    <meta name="description" content="Tverse.ai 精选全球150+优质AI工具与应用，涵盖AI绘画、文案写作、视频生成、编程开发等领域，助力个人与企业提效创新。">
+    <meta name="robots" content="index, follow">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0d1117; --bg-secondary: #161b22; --card-bg: #21262d;
+            --text-main: #e6edf3; --text-sub: #8b949e; --border: #30363d;
+            --accent: #58a6ff; --accent-hover: #79c0ff;
+            --ad-bg: rgba(88, 166, 255, 0.05); --ad-border: rgba(88, 166, 255, 0.2);
+            --sidebar-width: 380px;
+        }
+        body.theme-light { --bg-primary: #f6f8fa; --bg-secondary: #ffffff; --card-bg: #ffffff; --text-main: #1f2328; --text-sub: #656d76; --border: #d0d7de; --accent: #0969da; --ad-bg: rgba(9, 105, 218, 0.05); --ad-border: rgba(9, 105, 218, 0.2); }
+        body.theme-pro { --bg-primary: #0a1929; --bg-secondary: #132f4c; --card-bg: #1a365d; --text-main: #e2e8f0; --text-sub: #a0aec0; --border: #2d3748; --accent: #4299e1; --ad-bg: rgba(66, 153, 225, 0.05); --ad-border: rgba(66, 153, 225, 0.2); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-main); min-height: 100vh; }
+        .bg-soft { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 166, 255, 0.08), transparent), var(--bg-primary); }
+        
+        .app-container { display: flex; max-width: 1440px; margin: 0 auto; padding: 20px; gap: 20px; }
+        
+        /* 左侧主内容区 */
+        .main-content { flex: 1; min-width: 0; }
+        
+        header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 16px 24px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
+        .logo { font-size: 22px; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+        .search-bar { display: flex; align-items: center; background: var(--bg-primary); border-radius: 8px; padding: 8px 12px; width: 280px; border: 1px solid var(--border); }
+        .search-bar input { border: none; outline: none; background: transparent; padding: 4px 8px; color: var(--text-main); width: 100%; }
+        .search-bar button { background: var(--accent); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+        
+        /* 分类筛选 */
+        .category-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn { padding: 8px 16px; border: 1px solid var(--border); background: var(--card-bg); border-radius: 20px; cursor: pointer; font-size: 14px; transition: all 0.2s; color: var(--text-sub); }
+        .tab-btn:hover, .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        /* 工具网格 */
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .tool-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: all 0.3s ease; display: flex; flex-direction: column; }
+        .tool-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
+        .tool-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); border: 1px solid var(--border); font-size: 20px; color: var(--accent); }
+        .tool-name { font-size: 16px; font-weight: 600; margin-top: 12px; }
+        .tool-desc { font-size: 13px; color: var(--text-sub); margin-top: 8px; flex-grow: 1; }
+        .tool-link { margin-top: 16px; padding: 8px 12px; background: var(--ad-bg); color: var(--accent); border-radius: 6px; text-align: center; font-size: 14px; font-weight: 500; border: 1px solid var(--ad-border); }
+        .tool-link:hover { background: var(--accent); color: white; }
+        
+        /* 右侧侧边栏 */
+        .sidebar-right { width: var(--sidebar-width); flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .sidebar-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: var(--accent); }
+        
+        /* 热点新闻 */
+        .hot-list { display: flex; flex-direction: column; gap: 12px; }
+        .hot-item { display: flex; align-items: baseline; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .hot-rank { font-weight: bold; font-size: 14px; min-width: 20px; text-align: center; }
+        .hot-rank.top1 { color: #ff4d4f; }
+        .hot-rank.top2 { color: #faad14; }
+        .hot-rank.top3 { color: #52c41a; }
+        .hot-title { font-size: 14px; color: var(--text-main); text-decoration: none; flex: 1; line-height: 1.4; }
+        .hot-title:hover { color: var(--accent); text-decoration: underline; }
+        
+        /* 推荐工具 */
+        .rec-grid { display: flex; flex-direction: column; gap: 12px; }
+        .rec-card { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; transition: all 0.2s; border: 1px solid transparent; }
+        .rec-card:hover { border-color: var(--accent); background: var(--ad-bg); }
+        .rec-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); font-size: 16px; color: var(--accent); }
+        .rec-name { font-size: 14px; font-weight: 600; }
+        .rec-desc { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+        .rec-link { margin-left: auto; font-size: 12px; color: var(--accent); font-weight: 600; }
+        
+        /* SEO文章 */
+        .article-list { display: flex; flex-direction: column; gap: 12px; max-height: 500px; overflow-y: auto; padding-right: 5px; }
+        .article-item { padding: 12px; border-radius: 8px; border: 1px solid var(--border); transition: all 0.2s; cursor: pointer; }
+        .article-item:hover { border-color: var(--accent); background: var(--ad-bg); }
+        .article-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+        .article-meta { font-size: 12px; color: var(--text-sub); display: flex; justify-content: space-between; }
+        
+        /* 悬浮组件 */
+        .mini-player { position: fixed; bottom: 24px; right: 24px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 100; display: flex; align-items: center; gap: 12px; max-width: 280px; }
+        .player-ad { position: fixed; bottom: 100px; right: 24px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 99; width: 280px; text-align: center; }
+        .mini-player-controls { display: flex; align-items: center; gap: 8px; }
+        .mini-player-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; border: none; font-size: 12px; }
+        .mini-player-btn:hover { background: var(--accent-hover); transform: scale(1.1); }
+        .theme-switcher { position: fixed; bottom: 24px; left: 24px; display: flex; flex-direction: column; gap: 12px; z-index: 99; }
+        .theme-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--border); color: var(--text-sub); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .theme-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        /* 模态框 */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 40px; max-width: 480px; width: 100%; text-align: center; position: relative; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .qr-container { background: white; padding: 16px; border-radius: 12px; display: inline-block; margin: 24px 0; }
+        
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .app-container { flex-direction: column; }
+            .sidebar-right { width: 100%; }
+            .mini-player, .player-ad { display: none; } /* 移动端隐藏悬浮组件 */
+        }
+    </style>
+</head>
+<body style="font-family: sans-serif; background: #f4f4f4; padding: 20px;">
+       <div style="max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+         <h1 style="font-size: 28px; border-bottom: 1px solid #eee; padding-bottom: 10px;">AI+智慧照明：智能调光与节能控制</h1>
+         <p style="color: #888; font-size: 14px; margin: 20px 0;">发布于 2026-08-06</p>
+         <div style="line-height: 1.8; font-size: 16px; color: #333;">
+           城市照明智能化。本文分析了AI在光照感应、智能调光、故障检测、节能控制等方面的应用。这些技术实现了路灯的智能管理，节约了大量电能。
+         </div>
+       </div>
+     </body>
+</html>
