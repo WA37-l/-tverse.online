@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
-  <!-- 这里是你的首页 -->
+  <!-- 1. 这里是你的首页 -->
   <url>
     <loc>https://tverse.online/</loc>
     <lastmod>2026-06-14</lastmod>
@@ -10,10 +10,13 @@
   </url>
 
   <!-- 
-    如果你有其他页面（比如文章页），请按照上面的格式在这里添加。
-    例如：
+     2. 如果你的网站有“文章页”或“详情页”，请在这里添加。
+        例如，假设你的文章页链接是 https://tverse.online/article.html?id=123
+        你需要像下面这样写出来：
+  -->
+  <!--
   <url>
-    <loc>https://tverse.online/page1.html</loc>
+    <loc>https://tverse.online/article.html?id=123</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
